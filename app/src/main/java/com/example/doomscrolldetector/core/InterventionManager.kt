@@ -2,7 +2,9 @@ package com.example.doomscrolldetector.core
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -11,6 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.doomscrolldetector.R
+import com.example.doomscrolldetector.ui.MainActivity
 
 object InterventionManager {
     private const val CHANNEL_ID = "doomscroll_alerts"
@@ -23,12 +26,27 @@ object InterventionManager {
 
         Log.w("DoomscrollDetector", "[$packageName] ${awarenessState.level}: $message")
 
+        val launchIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            launchIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(toNotificationPriority(awarenessState.level))
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setContentIntent(contentIntent)
+            .setFullScreenIntent(contentIntent, true)
             .setAutoCancel(true)
             .build()
 
@@ -54,6 +72,9 @@ object InterventionManager {
                 NotificationManager.IMPORTANCE_HIGH
             )
             channel.description = "Interventions for mindless scrolling"
+            channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+            channel.enableVibration(true)
+            channel.vibrationPattern = longArrayOf(0, 200, 120, 200)
             manager.createNotificationChannel(channel)
         }
     }
