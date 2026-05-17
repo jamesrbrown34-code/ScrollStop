@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Doomscroll Detector</string>
+    <string name="accessibility_service_description">Detects mindless scrolling and sends intervention reminders.</string>
+</resources>
