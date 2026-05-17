@@ -17,23 +17,32 @@ object InterventionManager {
     private const val CHANNEL_NAME = "Doomscroll Alerts"
     private const val NOTIFICATION_ID = 10101
 
-    fun trigger(context: Context, packageName: String, durationMinutes: Long, scrollCount: Int) {
+    fun trigger(context: Context, packageName: String, awarenessState: AwarenessState) {
+        val message = awarenessState.message ?: return
         createChannel(context)
-        val message = "You've been mindlessly scrolling in $packageName for $durationMinutes minutes. Scrolls: $scrollCount"
 
-        Log.w("DoomscrollDetector", message)
+        Log.w("DoomscrollDetector", "[$packageName] ${awarenessState.level}: $message")
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(toNotificationPriority(awarenessState.level))
             .setAutoCancel(true)
             .build()
 
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         vibrate(context)
+    }
+
+    private fun toNotificationPriority(level: AwarenessLevel): Int {
+        return when (level) {
+            AwarenessLevel.NORMAL -> NotificationCompat.PRIORITY_LOW
+            AwarenessLevel.NOTICE -> NotificationCompat.PRIORITY_DEFAULT
+            AwarenessLevel.WARNING -> NotificationCompat.PRIORITY_HIGH
+            AwarenessLevel.CRITICAL -> NotificationCompat.PRIORITY_MAX
+        }
     }
 
     private fun createChannel(context: Context) {

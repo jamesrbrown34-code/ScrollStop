@@ -9,16 +9,15 @@ data class ScrollUiState(
     val currentApp: String = "None",
     val scrollCount: Int = 0,
     val sessionDurationMs: Long = 0L,
-    val status: String = "Idle"
+    val status: String = "Idle",
+    val awarenessLevel: AwarenessLevel = AwarenessLevel.NORMAL
 )
 
 object ScrollTracker {
-    private const val DOOMSCROLL_MINUTES_THRESHOLD = 15L
-    private const val DOOMSCROLL_SCROLL_COUNT_THRESHOLD = 100
-
     private var sessionApp: String? = null
     private var sessionStartTime: Long = 0L
     private var scrollCount: Int = 0
+    private var lastEmittedAwarenessLevel: AwarenessLevel = AwarenessLevel.NORMAL
 
     private val _uiState = MutableStateFlow(ScrollUiState())
     val uiState: StateFlow<ScrollUiState> = _uiState.asStateFlow()
@@ -31,15 +30,15 @@ object ScrollTracker {
 
         scrollCount += 1
         val sessionDuration = timestamp - sessionStartTime
-        updateUiState(packageName, sessionDuration, "Active")
+        val awarenessState = DoomscrollAwareness.evaluate(sessionDuration, scrollCount)
+        updateUiState(packageName, sessionDuration, "Active", awarenessState.level)
 
-        val durationMinutes = sessionDuration / 60000
-        val doomscrollDetected = durationMinutes > DOOMSCROLL_MINUTES_THRESHOLD &&
-            scrollCount > DOOMSCROLL_SCROLL_COUNT_THRESHOLD
+        val shouldTrigger = awarenessState.message != null &&
+            awarenessState.level.ordinal > lastEmittedAwarenessLevel.ordinal
 
-        if (doomscrollDetected) {
-            InterventionManager.trigger(context, packageName, durationMinutes, scrollCount)
-            resetToIdle()
+        if (shouldTrigger) {
+            InterventionManager.trigger(context, packageName, awarenessState)
+            lastEmittedAwarenessLevel = awarenessState.level
         }
     }
 
@@ -47,18 +46,19 @@ object ScrollTracker {
     fun onAppChanged(packageName: String, timestamp: Long) {
         if (sessionApp != packageName) {
             startNewSession(packageName, timestamp)
-            updateUiState(packageName, 0L, "Active")
+            updateUiState(packageName, 0L, "Active", AwarenessLevel.NORMAL)
         }
     }
 
     @Synchronized
     fun onIdleCheck(currentTime: Long) {
         if (sessionApp == null) {
-            updateUiState("None", 0L, "Idle")
+            updateUiState("None", 0L, "Idle", AwarenessLevel.NORMAL)
             return
         }
         val duration = currentTime - sessionStartTime
-        updateUiState(sessionApp ?: "None", duration, "Active")
+        val awarenessState = DoomscrollAwareness.evaluate(duration, scrollCount)
+        updateUiState(sessionApp ?: "None", duration, "Active", awarenessState.level)
     }
 
     @Synchronized
@@ -66,21 +66,24 @@ object ScrollTracker {
         sessionApp = null
         sessionStartTime = 0L
         scrollCount = 0
-        updateUiState("None", 0L, "Idle")
+        lastEmittedAwarenessLevel = AwarenessLevel.NORMAL
+        updateUiState("None", 0L, "Idle", AwarenessLevel.NORMAL)
     }
 
     private fun startNewSession(packageName: String, timestamp: Long) {
         sessionApp = packageName
         sessionStartTime = timestamp
         scrollCount = 0
+        lastEmittedAwarenessLevel = AwarenessLevel.NORMAL
     }
 
-    private fun updateUiState(app: String, durationMs: Long, status: String) {
+    private fun updateUiState(app: String, durationMs: Long, status: String, awarenessLevel: AwarenessLevel) {
         _uiState.value = ScrollUiState(
             currentApp = app,
             scrollCount = scrollCount,
             sessionDurationMs = durationMs,
-            status = status
+            status = status,
+            awarenessLevel = awarenessLevel
         )
     }
 }
