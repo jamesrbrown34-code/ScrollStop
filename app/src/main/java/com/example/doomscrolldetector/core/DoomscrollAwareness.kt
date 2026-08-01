@@ -22,9 +22,12 @@ object DoomscrollAwareness {
     private const val SCROLL_CRITICAL_THRESHOLD = 500
 
     fun evaluate(sessionDurationMs: Long, scrollCount: Int): AwarenessState {
-        val timeState = evaluateTime(sessionDurationMs)
-        val scrollState = evaluateScrollCount(scrollCount)
-        return if (timeState.level.ordinal >= scrollState.level.ordinal) timeState else scrollState
+        val states = listOf(
+            evaluateTime(sessionDurationMs),
+            evaluateScrollCount(scrollCount),
+            evaluateIntensity(sessionDurationMs, scrollCount)
+        )
+        return states.maxBy { it.level.ordinal }
     }
 
     private fun evaluateTime(sessionDurationMs: Long): AwarenessState {
@@ -45,6 +48,28 @@ object DoomscrollAwareness {
             )
 
             else -> AwarenessState(AwarenessLevel.NORMAL)
+        }
+    }
+
+    private fun evaluateIntensity(sessionDurationMs: Long, scrollCount: Int): AwarenessState {
+        val intensity = ScrollIntensityAnalyzer.evaluate(sessionDurationMs, scrollCount)
+        return when (intensity.level) {
+            AwarenessLevel.CRITICAL -> AwarenessState(
+                level = AwarenessLevel.CRITICAL,
+                message = "Your scrolling pace is very intense. Pause and take one deep breath."
+            )
+
+            AwarenessLevel.WARNING -> AwarenessState(
+                level = AwarenessLevel.WARNING,
+                message = "Your scrolling pace is picking up. Consider slowing down."
+            )
+
+            AwarenessLevel.NOTICE -> AwarenessState(
+                level = AwarenessLevel.NOTICE,
+                message = "You're scrolling faster than usual. Notice how this feels."
+            )
+
+            AwarenessLevel.NORMAL -> AwarenessState(AwarenessLevel.NORMAL)
         }
     }
 

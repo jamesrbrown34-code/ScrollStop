@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ScrollStop</string>
     <string name="accessibility_service_description">Detects mindless scrolling and sends intervention reminders.</string>
+    <string name="snooze_interventions_15_min">Snooze 15 min</string>
 </resources>

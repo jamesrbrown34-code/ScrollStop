@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -84,6 +86,8 @@ private fun MainScreen(onOpenAccessibilitySettings: () -> Unit) {
     ) { }
 
     LaunchedEffect(Unit) {
+        ScrollTracker.loadDailyStats(context)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val notificationPermission = ContextCompat.checkSelfPermission(
                 context,
@@ -112,6 +116,7 @@ private fun MainScreen(onOpenAccessibilitySettings: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -139,13 +144,36 @@ private fun MainScreen(onOpenAccessibilitySettings: () -> Unit) {
             Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 MetricRow(label = "Current app", value = state.currentApp)
                 MetricRow(label = "Scroll count", value = state.scrollCount.toString())
+                MetricRow(label = "Pace", value = formatScrollPace(state.intensity.scrollsPerMinute))
                 MetricRow(label = "Session", value = "${state.sessionDurationMs / 1000}s")
                 MetricRow(label = "Status", value = state.status)
             }
         }
 
+        Spacer(modifier = Modifier.height(14.dp))
+
+        Card(
+            colors = CardDefaults.cardColors(containerColor = PanelColor),
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = "TODAY'S PROGRESS",
+                    color = AccentColor,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                )
+                MetricRow(label = "Total scrolls", value = state.dailyStats.scrolls.toString())
+                MetricRow(label = "Sessions", value = state.dailyStats.sessions.toString())
+                MetricRow(label = "Longest session", value = formatDuration(state.dailyStats.longestSessionMs))
+                MetricRow(label = "Peak risk", value = state.dailyStats.highestAwarenessLevel.name.lowercase().replaceFirstChar { it.uppercase() })
+            }
+        }
+
         Text(
-            text = "Enable accessibility + notifications for 100-scroll alerts.",
+            text = "Enable accessibility + notifications for mindful alerts and daily progress.",
             color = SecondaryText,
             fontSize = 12.sp,
             modifier = Modifier.padding(top = 14.dp)
@@ -197,4 +225,15 @@ private fun MetricRow(label: String, value: String) {
         Spacer(modifier = Modifier.weight(1f))
         Text(text = value, color = AccentColor, fontWeight = FontWeight.SemiBold)
     }
+}
+
+private fun formatDuration(durationMs: Long): String {
+    val totalSeconds = durationMs / 1000
+    val minutes = totalSeconds / 60
+    val seconds = totalSeconds % 60
+    return if (minutes > 0) "${minutes}m ${seconds}s" else "${seconds}s"
+}
+
+private fun formatScrollPace(scrollsPerMinute: Double): String {
+    return if (scrollsPerMinute <= 0.0) "--" else "${scrollsPerMinute.toInt()} / min"
 }
