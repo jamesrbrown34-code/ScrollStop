@@ -1,0 +1,62 @@
+# ScrollStop — Store Listing
+
+## Title (max 30 chars)
+
+```
+ScrollStop
+```
+
+Optional descriptive alternative (also under 30):
+```
+ScrollStop – Stop Doomscrolling
+```
+
+## Short description (max 80 chars)
+
+```
+ScrollStop helps you notice doomscrolling and gently stop.
+```
+
+Backup, more action-oriented:
+```
+Stop doomscrolling. Gentle reminders help you put the phone down.
+```
+
+## Full description
+
+```
+ScrollStop helps you notice when you've been scrolling too long — and gently reminds you to stop.
+
+ScrollStop counts your scrolling in the background across the apps you choose to track, then sends a calm reminder when you've had enough. No judgement, no lockouts. Just a nudge to take back your day.
+
+HOW IT WORKS
+• Pick the apps you scroll most from a curated library of popular scrolling apps.
+• ScrollStop counts scrolls in the background — it never reads your screen, and everything stays on your device.
+• When you hit your reminder limit, you get a gentle reminder.
+• See your day at a glance: today's scrolls, your today's goal, your weekly pattern, and your top apps.
+
+BUILT TO RESPECT YOU
+• Quiet hours — silence reminders during a time window of your choice. Scrolling is still counted, just not interrupted.
+• Pause tracking — start a pause from a reminder notification. Scrolling during a pause isn't counted.
+• Today's goal — set a daily scroll target and stay on track.
+• Reminder style — heads-up or full-screen reminders, depending on what your phone allows.
+
+SCROLLSTOP PREMIUM
+Premium makes reminders truly yours:
+• Custom reminder limits and reminder tones
+• Per-app reminder limits and per-app reminder tones
+• Themes
+• Streak freeze — one missed day won't break your streak
+
+Premium is a monthly or yearly subscription with a free trial. Cancel anytime. Prices and trials are set per market.
+
+PRIVACY
+ScrollStop processes everything on your device. No account, no sign-up, and no data leaves your phone.
+```
+
+## Related assets still needed
+
+- Screenshots (2–8): real device captures — Today tab, Progress tab, Settings, a reminder notification, the Premium paywall.
+- Feature graphic: 1024×500 px.
+- App icon: 512×512 px (reuse the adaptive icon foreground/background).
+- Privacy policy: host `PRIVACY_POLICY.md` somewhere public (e.g., GitHub Pages) and paste the URL.
