@@ -33,13 +33,15 @@ HOW IT WORKS
 • Pick the apps you scroll most from a curated library of popular scrolling apps.
 • ScrollStop counts scrolls in the background — it never reads your screen, and everything stays on your device.
 • When you hit your reminder limit, you get a gentle reminder.
-• See your day at a glance: today's scrolls, your today's goal, your weekly pattern, and your top apps.
+• See your day at a glance: today's scrolls, your today's goal, your weekly pattern, your top apps, and a monthly breakdown.
 
 BUILT TO RESPECT YOU
 • Quiet hours — silence reminders during a time window of your choice. Scrolling is still counted, just not interrupted.
 • Pause tracking — start a pause from a reminder notification. Scrolling during a pause isn't counted.
 • Today's goal — set a daily scroll target and stay on track.
 • Reminder style — heads-up or full-screen reminders, depending on what your phone allows.
+• Reminder cooldown — choose how often reminders can arrive.
+• Reduction plans — pick Easy, Medium, Hard or Extreme and cut your scrolling week by week.
 
 SCROLLSTOP PREMIUM
 Premium makes reminders truly yours:
@@ -47,6 +49,7 @@ Premium makes reminders truly yours:
 • Per-app reminder limits and per-app reminder tones
 • Themes
 • Streak freeze — one missed day won't break your streak
+• Daily summary — a once-a-day recap of your scrolling
 
 Premium is a monthly or yearly subscription with a free trial. Cancel anytime. Prices and trials are set per market.
 

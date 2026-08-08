@@ -1,6 +1,6 @@
 # ScrollStop Privacy Policy
 
-Last updated: [date]
+Last updated: 8 August 2026
 
 ScrollStop ("we", "our", "the app") is an Android app that helps you notice and reduce mindless scrolling.
 
