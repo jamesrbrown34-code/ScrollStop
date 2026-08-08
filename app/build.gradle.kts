@@ -16,7 +16,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.scrollstop.app"
+        applicationId = "com.scrollstop.android"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

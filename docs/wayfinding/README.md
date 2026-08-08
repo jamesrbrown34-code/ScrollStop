@@ -10,7 +10,7 @@ ScrollStop published to Google Play production: a signed release build in the Pr
 - Terminology per CONTEXT.md (Premium, reminder limit, reminder tone, etc.). Use it in copy and decisions.
 - Skills to consult: grilling, domain-modeling, research.
 - Tracker: local-markdown. The map is this file; tickets are `docs/wayfinding/000N-*.md`; blocking uses the `blocked-by` frontmatter field (titles). A ticket is unblocked when every blocker is closed.
-- Already settled before this map (do not re-litigate): applicationId = `com.scrollstop.app`; release signing wired and keystore gitignored (`bundleRelease` works); store listing copy, privacy policy draft, accessibility declaration draft, data-safety and content-rating answers drafted (see the repo-root `.md` files); pricing $1.99/mo + $14.99/yr with 1-week free trials, product IDs `scrollstop_monthly` / `scrollstop_yearly`; the Full-screen reminder style is best-effort and degrades to heads-up; the debug premium override is debug-only and ignored in release.
+- Already settled before this map (do not re-litigate): applicationId = `com.scrollstop.android`; release signing wired and keystore gitignored (`bundleRelease` works); store listing copy, privacy policy draft, accessibility declaration draft, data-safety and content-rating answers drafted (see the repo-root `.md` files); pricing $1.99/mo + $14.99/yr with 1-week free trials, product IDs `scrollstop_monthly` / `scrollstop_yearly`; the Full-screen reminder style is best-effort and degrades to heads-up; the debug premium override is debug-only and ignored in release.
 
 ## Decisions so far
 

@@ -9,7 +9,7 @@ A single reference for everything left in Play Console. Pairs with:
 
 ## 0. Before you start (done)
 
-- ApplicationId renamed to `com.scrollstop.app` ✅ (build passes)
+- ApplicationId set to `com.scrollstop.android` ✅ (build passes)
 - Product IDs in code: `scrollstop_monthly`, `scrollstop_yearly` (subscriptions)
 - `compileSdk`/`targetSdk` bumped to **36** (Play requires it from Aug 31 2026) ✅
 - Release signing wired (`keystore.properties`, gitignored) — `./gradlew bundleRelease` works ✅
