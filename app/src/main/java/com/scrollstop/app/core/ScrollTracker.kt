@@ -27,7 +27,7 @@ object ScrollTracker {
      * to ~100ms apart). Scroll events arriving within this window are treated as one gesture,
      * so "one scroll" counts once instead of once per accessibility event.
      */
-    private const val SCROLL_GESTURE_WINDOW_MS = 300L
+    private const val SCROLL_GESTURE_WINDOW_MS = 200L
 
     private var sessionApp: String? = null
     private var sessionStartTime: Long = 0L
