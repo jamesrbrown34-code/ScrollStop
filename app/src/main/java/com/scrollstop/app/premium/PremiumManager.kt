@@ -28,7 +28,7 @@ class PremiumManager(context: Context) {
     private val settings = ReminderSettingsRepository(appContext)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val debugPrefs = appContext.getSharedPreferences("debug_settings", Context.MODE_PRIVATE)
-    private val _debugPremiumEnabled = MutableStateFlow(debugPrefs.getBoolean(DEBUG_PREMIUM_KEY, true))
+    private val _debugPremiumEnabled = MutableStateFlow(debugPrefs.getBoolean(DEBUG_PREMIUM_KEY, false))
     val debugPremiumEnabled: StateFlow<Boolean> = _debugPremiumEnabled.asStateFlow()
     val state: StateFlow<PremiumUiState> = combine(
         billing.state,

@@ -125,7 +125,7 @@ A continuous period in a **tracked app** from first scroll or app open until the
 _Avoid_: Browsing session
 
 **Debug premium override**:
-A debug-build-only mechanism that forces **Premium entitlement** to `true` regardless of billing status, so premium behaviour can be tested without a real purchase. A debug-only toggle on the main screen switches it on and off; it defaults to on in debug builds and is ignored in release.
+A debug-build-only mechanism that forces **Premium entitlement** to `true` regardless of billing status, so premium behaviour can be tested without a real purchase. A debug-only toggle on the Settings tab switches it on and off; it defaults to off in debug builds and is ignored in release.
 _Avoid_: Developer mode, test mode
 
 ## Relationships
