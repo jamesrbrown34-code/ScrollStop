@@ -21,10 +21,23 @@ data class DashboardSnapshot(
     val interruptionsToday: Int = 0,
     val interruptionsThisWeek: Int = 0,
     val topAppsToday: List<TopApp> = emptyList(),
-    val topAppsOverTime: List<DayTopApp> = emptyList()
+    val topAppsOverTime: List<DayTopApp> = emptyList(),
+    val todayByHour: List<Int> = List(24) { 0 },
+    val thisMonthScrolls: Int = 0,
+    val monthly: List<MonthlyScrollSummary> = emptyList(),
+    val monthComparison: ScrollComparison = ScrollComparison.Same,
+    val yearToDateScrolls: Int = 0,
+    val bestMonthYear: MonthlyScrollSummary? = null,
+    val averagePerDayYear: Int = 0,
+    val yearOverYear: ScrollComparison? = null,
+    val monthlyMomentum: ScrollComparison? = null,
+    val longTrend: List<MonthlyScrollSummary> = emptyList(),
+    val longTrendComparison: ScrollComparison? = null
 )
 
 data class DailyScrollSummary(val label: String, val scrolls: Int, val isToday: Boolean = false)
+
+data class MonthlyScrollSummary(val label: String, val scrolls: Int, val isCurrentMonth: Boolean = false)
 
 data class TopApp(val displayName: String, val scrolls: Int)
 
@@ -92,6 +105,58 @@ class DashboardRepository(private val analytics: ScrollAnalyticsRepository) {
             )
         }
 
+        val todayByHour = List(24) { hour -> byDate[today]?.hourlyScrolls?.get(hour) ?: 0 }
+
+        val byYearMonth = events.groupBy { it.date.year to it.date.month }
+        fun monthTotal(month: LocalDate): Int =
+            byYearMonth[month.year to month.month]?.sumOf { it.scrolls } ?: 0
+
+        val currentMonthStart = today.withDayOfMonth(1)
+        val monthList = (11 downTo 0).map { currentMonthStart.minusMonths(it.toLong()) }
+        val monthly = monthList.map { month ->
+            MonthlyScrollSummary(
+                label = month.month.shortLabel(),
+                scrolls = monthTotal(month),
+                isCurrentMonth = month == currentMonthStart
+            )
+        }
+        val thisMonthScrolls = monthTotal(currentMonthStart)
+        val monthComparison = comparison(thisMonthScrolls, monthTotal(currentMonthStart.minusMonths(1)))
+
+        val yearStart = today.withDayOfYear(1)
+        val yearScrolls = events.filter { !it.date.isBefore(yearStart) }.sumOf { it.scrolls }
+        val yearMonths = (0 until today.monthValue - 1).map { yearStart.plusMonths(it.toLong()) }
+        val yearMonthly = yearMonths.map { month ->
+            MonthlyScrollSummary(label = month.month.shortLabel(), scrolls = monthTotal(month))
+        }
+        val bestMonthYear = yearMonthly.maxByOrNull { it.scrolls }?.takeIf { it.scrolls > 0 }
+        val averagePerDayYear = if (today.dayOfYear > 0) yearScrolls / today.dayOfYear else 0
+        val lastYearScrolls = events
+            .filter { !it.date.isBefore(yearStart.minusYears(1)) && !it.date.isAfter(today.minusYears(1)) }
+            .sumOf { it.scrolls }
+        val yearOverYear = if (yearScrolls > 0 || lastYearScrolls > 0) {
+            comparison(yearScrolls, lastYearScrolls)
+        } else {
+            null
+        }
+        val monthlyMomentum = if (yearMonths.size >= 2) {
+            val last = monthTotal(yearMonths[yearMonths.size - 1])
+            val previous = monthTotal(yearMonths[yearMonths.size - 2])
+            if (last > 0 || previous > 0) comparison(last, previous) else null
+        } else {
+            null
+        }
+        val longTrend = monthList.takeLast(6).map { month ->
+            MonthlyScrollSummary(label = month.month.shortLabel(), scrolls = monthTotal(month))
+        }
+        val recentQuarter = longTrend.takeLast(3).sumOf { it.scrolls }
+        val priorQuarter = longTrend.take(3).sumOf { it.scrolls }
+        val longTrendComparison = if (recentQuarter > 0 || priorQuarter > 0) {
+            comparison(recentQuarter, priorQuarter)
+        } else {
+            null
+        }
+
         return DashboardSnapshot(
             todayScrolls = todayScrolls,
             comparison = comparison(todayScrolls, yesterdayScrolls),
@@ -102,7 +167,18 @@ class DashboardRepository(private val analytics: ScrollAnalyticsRepository) {
             interruptionsToday = byDate[today]?.interruptionsShown ?: 0,
             interruptionsThisWeek = weekDates.sumOf { byDate[it]?.interruptionsShown ?: 0 },
             topAppsToday = topAppsToday,
-            topAppsOverTime = topAppsOverTime
+            topAppsOverTime = topAppsOverTime,
+            todayByHour = todayByHour,
+            thisMonthScrolls = thisMonthScrolls,
+            monthly = monthly,
+            monthComparison = monthComparison,
+            yearToDateScrolls = yearScrolls,
+            bestMonthYear = bestMonthYear,
+            averagePerDayYear = averagePerDayYear,
+            yearOverYear = yearOverYear,
+            monthlyMomentum = monthlyMomentum,
+            longTrend = longTrend,
+            longTrendComparison = longTrendComparison
         )
     }
 
@@ -127,6 +203,9 @@ class DashboardRepository(private val analytics: ScrollAnalyticsRepository) {
     }
 
     private fun java.time.DayOfWeek.shortLabel(): String =
+        name.take(3).lowercase().replaceFirstChar { it.uppercase() }
+
+    private fun java.time.Month.shortLabel(): String =
         name.take(3).lowercase().replaceFirstChar { it.uppercase() }
 
     private fun String.toDisplayName(): String =

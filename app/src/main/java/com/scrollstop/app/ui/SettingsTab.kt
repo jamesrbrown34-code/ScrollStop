@@ -78,6 +78,7 @@ internal fun SettingsTab(
     debugPremiumEnabled: Boolean,
     reminderStyle: ReminderStyle,
     fullScreenAllowed: Boolean,
+    cooldownMinutes: Int,
     status: ScrollStopStatus,
     serviceActive: Boolean,
     notificationGranted: Boolean,
@@ -88,10 +89,17 @@ internal fun SettingsTab(
     onRequestNotificationPermission: () -> Unit,
     onSetReminderStyle: (ReminderStyle) -> Unit,
     onOpenFullScreenSettings: () -> Unit,
+    onSetCooldown: (Int) -> Unit,
     onSetLimit: (Int) -> Unit,
     onSetTone: (ReminderTone) -> Unit,
     onSetTheme: (AppTheme) -> Unit,
     onUpdateQuietHours: (QuietHoursSettings) -> Unit,
+    onSetQuietExcluded: (String) -> Unit,
+    dailySummaryEnabled: Boolean,
+    dailySummaryHour: Int,
+    dailySummaryMinute: Int,
+    onSetDailySummaryEnabled: (Boolean) -> Unit,
+    onSetDailySummaryTime: (Int, Int) -> Unit,
     onToggleApp: (String) -> Unit,
     onAddApp: (String) -> Unit,
     onSetPerAppLimit: (String, Int?) -> Unit,
@@ -124,6 +132,17 @@ internal fun SettingsTab(
             onOpenFullScreenSettings = onOpenFullScreenSettings,
             onSetStyle = onSetReminderStyle
         )
+        ReminderCooldownCard(
+            cooldownMinutes = cooldownMinutes,
+            onSetCooldown = onSetCooldown
+        )
+        if (premium.isPremium) DailySummaryCard(
+            enabled = dailySummaryEnabled,
+            hour = dailySummaryHour,
+            minute = dailySummaryMinute,
+            onSetEnabled = onSetDailySummaryEnabled,
+            onSetTime = onSetDailySummaryTime
+        )
         if (premium.isPremium) ReminderToneCard(premium.reminderTone, onSetTone = onSetTone)
         if (premium.isPremium) ThemeCard(premium.theme, onSetTheme = onSetTheme)
         QuietHoursCard(quietHours, onEdit = { showQuietHours = true })
@@ -144,8 +163,10 @@ internal fun SettingsTab(
     if (showTrackedApps) TrackedAppsDialog(
         selected = trackedApps,
         premium = premium,
+        quietHours = quietHours,
         onToggle = onToggleApp,
         onAddApp = onAddApp,
+        onToggleQuietExcluded = onSetQuietExcluded,
         onSetPerAppLimit = onSetPerAppLimit,
         onSetPerAppTone = onSetPerAppTone,
         onDismiss = { showTrackedApps = false }
@@ -350,6 +371,119 @@ private fun ReminderStyleCard(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
+private fun ReminderCooldownCard(cooldownMinutes: Int, onSetCooldown: (Int) -> Unit) {
+    var customInput by remember { mutableStateOf("") }
+    val parsed = customInput.toIntOrNull()
+    val showError = customInput.isNotEmpty() && (parsed == null || parsed < 0)
+    val commitCustom = {
+        parsed?.takeIf { it >= 0 }?.let(onSetCooldown)
+        if (customInput.isNotEmpty()) customInput = ""
+    }
+    Card(colors = CardDefaults.cardColors(containerColor = PanelColor), shape = RoundedCornerShape(20.dp)) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text("Reminder Cooldown", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(
+                if (cooldownMinutes == 0) {
+                    "Off — reminders fire on every limit"
+                } else {
+                    "$cooldownMinutes min between reminders"
+                },
+                color = Accent,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Black,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Text(
+                "How long ScrollStop waits between reminders.",
+                color = TextSecondary,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 12.dp)
+            ) {
+                listOf(0, 5, 10, 15, 30, 45, 50).forEach { minutes ->
+                    FilterChip(
+                        selected = cooldownMinutes == minutes,
+                        onClick = { onSetCooldown(minutes) },
+                        label = { Text(if (minutes == 0) "Off" else "$minutes min") },
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = AccentContainer,
+                            labelColor = TextPrimary,
+                            selectedContainerColor = Accent,
+                            selectedLabelColor = Background
+                        )
+                    )
+                }
+            }
+            OutlinedTextField(
+                value = customInput,
+                onValueChange = { customInput = it.filter(Char::isDigit) },
+                label = { Text("Custom cooldown (minutes, 0 = off)") },
+                isError = showError,
+                supportingText = if (showError) {
+                    { Text("Enter 0 or a positive number.", color = TextSecondary) }
+                } else null,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = { commitCustom() }),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp)
+            )
+            Text(
+                "Tip: the lower the cooldown, the better the app works at breaking the habit.",
+                color = TextSecondary,
+                fontSize = 11.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun DailySummaryCard(
+    enabled: Boolean,
+    hour: Int,
+    minute: Int,
+    onSetEnabled: (Boolean) -> Unit,
+    onSetTime: (Int, Int) -> Unit
+) {
+    var pickingTime by remember { mutableStateOf(false) }
+    Card(colors = CardDefaults.cardColors(containerColor = PanelColor), shape = RoundedCornerShape(20.dp)) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text("Daily Summary", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(
+                "A once-a-day recap of your scrolling.",
+                color = TextSecondary,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Enabled", color = TextPrimary, fontSize = 14.sp)
+                Switch(checked = enabled, onCheckedChange = onSetEnabled)
+            }
+            TimeRow(
+                label = "Time",
+                minutes = hour * 60 + minute,
+                onClick = { pickingTime = true },
+                enabled = enabled
+            )
+        }
+    }
+
+    if (pickingTime) TimePickerDialog(
+        initialMinutes = hour * 60 + minute,
+        onConfirm = { m -> onSetTime(m / 60, m % 60); pickingTime = false },
+        onDismiss = { pickingTime = false }
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
 private fun ReminderToneCard(selected: ReminderTone, onSetTone: (ReminderTone) -> Unit) {
     Card(colors = CardDefaults.cardColors(containerColor = PanelColor), shape = RoundedCornerShape(20.dp)) {
         Column(modifier = Modifier.padding(20.dp)) {
@@ -537,7 +671,7 @@ private fun QuietHoursDialog(
         },
         confirmButton = {
             TextButton(onClick = {
-                onUpdate(QuietHoursSettings(enabled = enabled, startMinutes = start, endMinutes = end))
+                onUpdate(settings.copy(enabled = enabled, startMinutes = start, endMinutes = end))
                 onDismiss()
             }) { Text("Save") }
         },
@@ -639,11 +773,38 @@ private fun AppSettingChip(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
+private fun QuietHoursChip(quietFollowed: Boolean, onClick: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(if (quietFollowed) AccentContainer else Color(0xFF1E1E1E))
+            .border(
+                width = 1.dp,
+                color = if (quietFollowed) Accent else TextSecondary.copy(alpha = 0.5f),
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+    ) {
+        Text(
+            text = if (quietFollowed) "Quiet hours: on" else "Quiet hours: off",
+            color = if (quietFollowed) TextPrimary else TextSecondary,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
 private fun TrackedAppsDialog(
     selected: Set<String>,
     premium: PremiumUiState,
+    quietHours: QuietHoursSettings,
     onToggle: (String) -> Unit,
     onAddApp: (String) -> Unit,
+    onToggleQuietExcluded: (String) -> Unit,
     onSetPerAppLimit: (String, Int?) -> Unit,
     onSetPerAppTone: (String, ReminderTone?) -> Unit,
     onDismiss: () -> Unit
@@ -705,6 +866,10 @@ private fun TrackedAppsDialog(
                                         value = effTone.displayName,
                                         overridden = hasToneOverride,
                                         onClick = { editingToneFor = app.packageName }
+                                    )
+                                    QuietHoursChip(
+                                        quietFollowed = app.packageName !in quietHours.quietExcludedApps,
+                                        onClick = { onToggleQuietExcluded(app.packageName) }
                                     )
                                 }
                             }

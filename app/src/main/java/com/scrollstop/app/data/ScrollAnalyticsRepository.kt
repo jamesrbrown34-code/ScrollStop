@@ -17,7 +17,8 @@ data class ScrollEvent(
     val timestamp: Long,
     val date: LocalDate,
     val scrolls: Int,
-    val interruptionsShown: Int
+    val interruptionsShown: Int,
+    val hourlyScrolls: Map<Int, Int> = emptyMap()
 )
 
 data class AppScrollEvent(
@@ -36,7 +37,7 @@ interface ScrollAnalyticsRepository {
     fun recordInterruption(packageName: String, timestamp: Long = System.currentTimeMillis())
 }
 
-/** Local, dependency-free storage for the rolling 30-day analytics history. */
+/** Local, dependency-free storage for the rolling 365-day analytics history. */
 class LocalScrollAnalyticsRepository(context: Context) : ScrollAnalyticsRepository {
     private val preferences = context.applicationContext.getSharedPreferences(
         PREFERENCES_NAME,
@@ -50,8 +51,12 @@ class LocalScrollAnalyticsRepository(context: Context) : ScrollAnalyticsReposito
     override val appEvents: StateFlow<List<AppScrollEvent>> = _appEvents.asStateFlow()
 
     override fun recordScroll(packageName: String, timestamp: Long) {
+        val hour = timestamp.toLocalHour()
         updateDay(timestamp) { event ->
-            event.copy(scrolls = event.scrolls + 1)
+            event.copy(
+                scrolls = event.scrolls + 1,
+                hourlyScrolls = event.hourlyScrolls + (hour to (event.hourlyScrolls[hour] ?: 0) + 1)
+            )
         }
         updateAppDay(timestamp, packageName) { event ->
             event.copy(scrolls = event.scrolls + 1)
@@ -139,12 +144,22 @@ class LocalScrollAnalyticsRepository(context: Context) : ScrollAnalyticsReposito
                             timestamp = item.getLong("timestamp"),
                             date = LocalDate.parse(item.getString("date")),
                             scrolls = item.getInt("scrolls"),
-                            interruptionsShown = item.getInt("interruptionsShown")
+                            interruptionsShown = item.getInt("interruptionsShown"),
+                            hourlyScrolls = decodeHourly(item.optJSONObject("hourly"))
                         )
                     )
                 }
             }
         }.getOrDefault(emptyList())
+    }
+
+    private fun decodeHourly(hourly: JSONObject?): Map<Int, Int> {
+        if (hourly == null) return emptyMap()
+        return runCatching {
+            hourly.keys().asSequence().mapNotNull { key ->
+                key.toIntOrNull()?.let { it to hourly.getInt(key) }
+            }.toMap()
+        }.getOrDefault(emptyMap())
     }
 
     private fun encode(events: List<ScrollEvent>): String = JSONArray().apply {
@@ -154,6 +169,9 @@ class LocalScrollAnalyticsRepository(context: Context) : ScrollAnalyticsReposito
                 put("date", event.date.toString())
                 put("scrolls", event.scrolls)
                 put("interruptionsShown", event.interruptionsShown)
+                put("hourly", JSONObject().apply {
+                    event.hourlyScrolls.forEach { (hour, count) -> put(hour.toString(), count) }
+                })
             })
         }
     }.toString()
@@ -194,11 +212,14 @@ class LocalScrollAnalyticsRepository(context: Context) : ScrollAnalyticsReposito
     private fun Long.toLocalDate(): LocalDate =
         java.time.Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
 
+    private fun Long.toLocalHour(): Int =
+        java.time.Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).hour
+
     private companion object {
         const val PREFERENCES_NAME = "scroll_analytics"
         const val EVENTS_KEY = "daily_scroll_events"
         const val APP_EVENTS_KEY = "app_scroll_events"
-        const val RETAINED_DAYS = 60
+        const val RETAINED_DAYS = 365
     }
 }
 

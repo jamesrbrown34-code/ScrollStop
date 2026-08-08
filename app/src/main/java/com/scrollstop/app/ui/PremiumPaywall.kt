@@ -43,7 +43,12 @@ private val premiumFeatures = listOf(
     "Reminder tones",
     "Per-app limits & tones",
     "Colour themes",
-    "Streak freeze"
+    "Streak freeze",
+    "Per-app quiet hours",
+    "Per-day goals",
+    "Daily summary",
+    "Hourly insights",
+    "Full milestone gallery"
 )
 
 private enum class PaywallPlan(val productId: String, val label: String) {

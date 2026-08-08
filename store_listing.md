@@ -52,6 +52,9 @@ Premium is a monthly or yearly subscription with a free trial. Cancel anytime. P
 
 PRIVACY
 ScrollStop processes everything on your device. No account, no sign-up, and no data leaves your phone.
+
+ACCESSIBILITY
+ScrollStop uses an Android accessibility service solely to count scroll events in the apps you choose to track — it never reads your screen, text, or input, and it only monitors the apps you've selected. You enable it explicitly and can remove it any time.
 ```
 
 ## Related assets still needed

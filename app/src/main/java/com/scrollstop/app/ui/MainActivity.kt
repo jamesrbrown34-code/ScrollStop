@@ -50,8 +50,11 @@ import com.scrollstop.app.core.FullScreenIntent
 import com.scrollstop.app.core.ScrollTracker
 import com.scrollstop.app.core.ScrollStopStatusGraph
 import com.scrollstop.app.data.AnalyticsGraph
+import com.scrollstop.app.data.DailySummaryGraph
+import com.scrollstop.app.data.NudgeGraph
 import com.scrollstop.app.data.PauseGraph
 import com.scrollstop.app.data.QuietHoursGraph
+import com.scrollstop.app.data.ReminderCooldownGraph
 import com.scrollstop.app.data.ReminderStyleGraph
 import com.scrollstop.app.data.TodayGoalGraph
 import com.scrollstop.app.data.TrackedAppsGraph
@@ -148,9 +151,21 @@ private fun MainScreen(
     val pauseRepository = remember(context) { PauseGraph.repository(context) }
     val pausedUntil by pauseRepository.pausedUntil.collectAsState()
     val todayGoalRepository = remember(context) { TodayGoalGraph.repository(context) }
-    val todayGoal by todayGoalRepository.goal.collectAsState()
+    val todayGoalSettings by todayGoalRepository.settings.collectAsState()
+    val todayGoal = if (premium.isPremium) {
+        todayGoalSettings.effectiveGoal(java.time.LocalDate.now())
+    } else {
+        todayGoalSettings.default
+    }
     val reminderStyleRepository = remember(context) { ReminderStyleGraph.repository(context) }
     val reminderStyle by reminderStyleRepository.style.collectAsState()
+    val cooldownRepository = remember(context) { ReminderCooldownGraph.repository(context) }
+    val cooldownMinutes by cooldownRepository.cooldownMinutes.collectAsState()
+    val dailySummaryRepository = remember(context) { DailySummaryGraph.repository(context) }
+    val dailySummary by dailySummaryRepository.settings.collectAsState()
+    val nudgeRepository = remember(context) { NudgeGraph.repository(context) }
+    val latestNudge by nudgeRepository.lastMessage.collectAsState()
+    val lastFallback by nudgeRepository.lastFallback.collectAsState()
 
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -197,7 +212,13 @@ private fun MainScreen(
                     MainTab.TODAY -> TodayTab(
                         dashboard = dashboard,
                         todayGoal = todayGoal,
+                        perDayGoals = todayGoalSettings.perDay,
+                        latestNudge = latestNudge,
+                        reminderTone = premium.reminderTone,
+                        lastFallback = lastFallback,
                         onSetGoal = todayGoalRepository::setGoal,
+                        onSetPerDayGoal = todayGoalRepository::setPerDayGoal,
+                        onPersistFallback = nudgeRepository::setLastFallback,
                         status = status,
                         isPremium = premium.isPremium,
                         onOpenPremium = { showPremium = true },
@@ -220,6 +241,7 @@ private fun MainScreen(
                         debugPremiumEnabled = debugPremiumEnabled,
                         reminderStyle = reminderStyle,
                         fullScreenAllowed = fullScreenAllowed,
+                        cooldownMinutes = cooldownMinutes,
                         status = status,
                         serviceActive = serviceActive,
                         notificationGranted = notificationGranted,
@@ -232,10 +254,17 @@ private fun MainScreen(
                         },
                         onSetReminderStyle = reminderStyleRepository::setStyle,
                         onOpenFullScreenSettings = { FullScreenIntent.openPermissionSettings(context) },
+                        onSetCooldown = cooldownRepository::setCooldown,
                         onSetLimit = premiumManager::setReminderLimit,
                         onSetTone = premiumManager::setReminderTone,
                         onSetTheme = premiumManager::setTheme,
                         onUpdateQuietHours = quietHoursRepository::update,
+                        onSetQuietExcluded = quietHoursRepository::toggleQuietExcluded,
+                        dailySummaryEnabled = dailySummary.enabled,
+                        dailySummaryHour = dailySummary.hour,
+                        dailySummaryMinute = dailySummary.minute,
+                        onSetDailySummaryEnabled = dailySummaryRepository::setEnabled,
+                        onSetDailySummaryTime = dailySummaryRepository::setTime,
                         onToggleApp = trackedAppsRepository::toggle,
                         onAddApp = trackedAppsRepository::addApp,
                         onSetPerAppLimit = premiumManager::setPerAppLimit,
