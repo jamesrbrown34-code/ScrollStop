@@ -7,7 +7,7 @@ blocked-by: []
 
 ## Question
 
-Google Play's new-account rules (personal accounts created after Nov 2023) can require a closed test with 12+ opted-in testers for 14 days before production is granted. Does this apply to ScrollStop's account, and exactly how do we satisfy it?
+Google Play's new-account rules (personal accounts created after Nov 2023) can require a closed test with 12+ opted-in testers for 14 days before production is granted. Does this apply to ScrollBeat's account, and exactly how do we satisfy it?
 
 Research (AFK, via a research subagent):
 - The current Play Console testing requirements for new personal vs business accounts.

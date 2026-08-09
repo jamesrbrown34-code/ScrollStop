@@ -1,4 +1,4 @@
-# ScrollStop — Play Console Launch Kit
+# ScrollBeat — Play Console Launch Kit
 
 A single reference for everything left in Play Console. Pairs with:
 - `store_listing.md` — title, short & full description, asset checklist
@@ -26,7 +26,7 @@ A single reference for everything left in Play Console. Pairs with:
 ## 2. Create the app
 
 1. Play Console → **Create app**.
-2. App name: `ScrollStop`. Default language: English. App or game: **App**.
+2. App name: `ScrollBeat`. Default language: English. App or game: **App**.
 3. Free vs paid: **Free** (you monetise via the in-app subscription).
 4. Category suggestion: **Health & Fitness** (sub: Self Management) or **Productivity**.
 
@@ -87,15 +87,15 @@ Play Console → **App content → Accessibility**. Paste from `accessibility_de
 
 Play Console → **Monetise → Products → Subscriptions** (requires the merchant account from step 1).
 
-Create **ScrollStop Monthly**:
+Create **ScrollBeat Monthly**:
 - Product ID: `scrollstop_monthly`  ← must match code exactly
-- Name: "ScrollStop Monthly"
+- Name: "ScrollBeat Monthly"
 - Add a **base plan**: auto-renewing, billing period **1 month**, price **$1.99** (add local-market prices as you like; Google converts).
 - Enable a **free trial: 7 days** on the base plan.
 
-Create **ScrollStop Yearly**:
+Create **ScrollBeat Yearly**:
 - Product ID: `scrollstop_yearly`  ← must match code exactly
-- Name: "ScrollStop Yearly"
+- Name: "ScrollBeat Yearly"
 - Add a **base plan**: auto-renewing, billing period **1 year**, price **$14.99**.
 - Enable a **free trial: 7 days** on the base plan.
 

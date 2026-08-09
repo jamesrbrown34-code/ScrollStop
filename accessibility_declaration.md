@@ -1,4 +1,4 @@
-# ScrollStop — Accessibility Declaration (Play Console)
+# ScrollBeat — Accessibility Declaration (Play Console)
 
 Use this in Play Console → **Policy → App content → Accessibility**. Adapt the wording to fit the exact form fields; the key points below are what Google's reviewer looks for.
 
@@ -7,7 +7,7 @@ Yes. The app declares one service, `com.scrollstop.app.service.ScrollMonitorServ
 
 ## 2. What does the accessibility service do? What is its purpose?
 
-ScrollStop is an app that helps people notice and reduce mindless scrolling. The accessibility service exists for **one purpose only**: to count scroll events in the apps the user has chosen to track, so the app can show a gentle reminder when they have scrolled too much.
+ScrollBeat is an app that helps people notice and reduce mindless scrolling. The accessibility service exists for **one purpose only**: to count scroll events in the apps the user has chosen to track, so the app can show a gentle reminder when they have scrolled too much.
 
 Specifically, the service listens for two event types:
 - `TYPE_VIEW_SCROLLED` — to count scrolls.
@@ -19,7 +19,7 @@ That is the entire scope. The service does **not** read screen content, does not
 
 - The service powers **scroll tracking and reminders** — the app's core function. Without it, the app cannot count scrolls or decide when to remind the user.
 - Every other part of the app (dashboard, statistics, settings) works independently; the service only enables the tracking/reminder feature.
-- The service is **off by default**. The user must explicitly enable it in their device's accessibility settings; ScrollStop walks them through this during onboarding.
+- The service is **off by default**. The user must explicitly enable it in their device's accessibility settings; ScrollBeat walks them through this during onboarding.
 - The user chooses **exactly which apps are tracked** from a curated list. The service reacts only to events from those apps.
 
 ## 4. Data handling
@@ -35,7 +35,7 @@ That is the entire scope. The service does **not** read screen content, does not
 
 ## 6. Transparency to users
 
-- The service's on-device settings screen and ScrollStop's onboarding both describe exactly what the service does.
+- The service's on-device settings screen and ScrollBeat's onboarding both describe exactly what the service does.
 - The Play Store listing and the app's privacy policy state that the app does not collect or transmit any data.
 
 ---

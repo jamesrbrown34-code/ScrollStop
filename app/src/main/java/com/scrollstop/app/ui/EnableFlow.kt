@@ -32,9 +32,9 @@ internal fun EnableAccessibilityActions(
         colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Background),
         shape = RoundedCornerShape(12.dp),
         modifier = modifier.fillMaxWidth()
-    ) { Text("Enable ScrollStop", fontWeight = FontWeight.Bold) }
+    ) { Text("Enable ScrollBeat", fontWeight = FontWeight.Bold) }
     Text(
-        "You'll see a ScrollStop toggle — flip it ON, then come back. If you see a security warning, tap Allow.",
+        "You'll see a ScrollBeat toggle — flip it ON, then come back. If you see a security warning, tap Allow.",
         color = TextSecondary,
         fontSize = 12.sp,
         modifier = Modifier.padding(top = 8.dp)
@@ -52,7 +52,7 @@ internal fun EnableAccessibilityActions(
 @Composable
 internal fun ServiceNotRunningHint(modifier: Modifier = Modifier) {
     Text(
-        "Service isn't running — open ScrollStop to restart it.",
+        "Service isn't running — open ScrollBeat to restart it.",
         color = Accent,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,

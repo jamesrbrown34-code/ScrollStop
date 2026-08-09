@@ -1,4 +1,4 @@
-# ScrollStop Roadmap
+# ScrollBeat Roadmap
 
 How to read this: phases are in **build order** — later phases assume earlier ones. Each item is tagged **Free** or **Premium** and given a priority (P1 = high, P3 = low). "Why" explains the value; "Notes" point at the code that needs to change.
 

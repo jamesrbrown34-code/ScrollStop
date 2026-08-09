@@ -52,7 +52,7 @@ import com.scrollstop.app.data.TrackedAppsGraph
 
 private enum class OnboardingStep(val title: String) {
     WELCOME("Welcome"),
-    PERMISSIONS("Enable ScrollStop"),
+    PERMISSIONS("Enable ScrollBeat"),
     APPS("Tracked apps"),
     GOAL("Today's goal")
 }
@@ -147,7 +147,7 @@ internal fun OnboardingScreen(
 @Composable
 private fun WelcomeStep() {
     Column {
-        Text("ScrollStop", color = TextPrimary, fontSize = 34.sp, fontWeight = FontWeight.Black)
+        Text("ScrollBeat", color = TextPrimary, fontSize = 34.sp, fontWeight = FontWeight.Black)
         Text(
             "A calmer view of your scrolling.",
             color = TextSecondary,
@@ -155,7 +155,7 @@ private fun WelcomeStep() {
             modifier = Modifier.padding(top = 8.dp)
         )
         Text(
-            "ScrollStop watches the apps you scroll through, nudges you when you've had enough, and shows you how your time is really spent.",
+            "ScrollBeat watches the apps you scroll through, nudges you when you've had enough, and shows you how your time is really spent.",
             color = TextPrimary,
             fontSize = 14.sp,
             modifier = Modifier.padding(top = 24.dp)
@@ -180,13 +180,13 @@ private fun PermissionsStep(
 ) {
     Column {
         Text(
-            "ScrollStop runs in the background",
+            "ScrollBeat runs in the background",
             color = TextPrimary,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            "To detect scrolling, ScrollStop needs the accessibility permission and notification access.",
+            "To detect scrolling, ScrollBeat needs the accessibility permission and notification access.",
             color = TextSecondary,
             fontSize = 14.sp,
             modifier = Modifier.padding(top = 10.dp)
@@ -195,7 +195,7 @@ private fun PermissionsStep(
         Spacer(Modifier.height(24.dp))
         when (status) {
             ScrollStopStatus.ENABLED -> {
-                Text("ScrollStop is active ✓", color = Accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                Text("ScrollBeat is active ✓", color = Accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
                 if (!serviceActive) {
                     ServiceNotRunningHint(modifier = Modifier.padding(top = 8.dp))
                 }
@@ -215,7 +215,7 @@ private fun PermissionsStep(
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("Allow notifications", fontWeight = FontWeight.Bold) }
                 Text(
-                    "ScrollStop needs notifications to deliver its reminders.",
+                    "ScrollBeat needs notifications to deliver its reminders.",
                     color = TextSecondary,
                     fontSize = 12.sp,
                     modifier = Modifier.padding(top = 8.dp)
@@ -235,7 +235,7 @@ private fun AppsStep(selected: Set<String>, onToggle: (String) -> Unit) {
             fontWeight = FontWeight.Bold
         )
         Text(
-            "Pick the ones you want ScrollStop to watch. You can change this any time.",
+            "Pick the ones you want ScrollBeat to watch. You can change this any time.",
             color = TextSecondary,
             fontSize = 14.sp,
             modifier = Modifier.padding(top = 10.dp)

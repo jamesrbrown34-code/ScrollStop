@@ -1,6 +1,6 @@
-# ScrollStop — Launch & Growth Plan
+# ScrollBeat — Launch & Growth Plan
 
-Goal: get ScrollStop live on Google Play, in front of the right users, and set up to iterate. This plan is the single runbook from "working app in a repo" to "published, marketed, measurable app".
+Goal: get ScrollBeat live on Google Play, in front of the right users, and set up to iterate. This plan is the single runbook from "working app in a repo" to "published, marketed, measurable app".
 
 **Where we are now (audit, Aug 2026):**
 - ✅ All roadmap phases 1–4 shipped in code (`plan.md`): tracking, quiet hours, pause tracking, weekly report, today's goal, app insights, per-app limits/tones, track-any-app, deep analytics, widget, streak freeze.
@@ -51,7 +51,7 @@ Re-verify `app/build/outputs/bundle/release/app-release.aab` timestamp updates. 
 
 **B1. Developer account.** Pay the one-time **$25** registration if not done. Complete the Developer Profile (name, email, address) — required before publishing.
 
-**B2. Create the app.** Free app, name `ScrollStop`, default language English. Category suggestion: **Health & Fitness** (sub: Self Management) or **Productivity** — test both in search during ASO later.
+**B2. Create the app.** Free app, name `ScrollBeat`, default language English. Category suggestion: **Health & Fitness** (sub: Self Management) or **Productivity** — test both in search during ASO later.
 
 **B3. Store listing assets** (the current blocker — nothing exists yet):
 - **App icon 512×512** — reuse the adaptive icon foreground/background (the "S" letterform logo). Export as both adaptive and legacy icon.
@@ -139,12 +139,12 @@ Ranked by expected ROI for a solo, bootstrapped indie app. Do 1–3 first; 4–6
 
 **E1. Owned community launches (free, highest ROI).** Launch-day blitz in the exact communities that want this:
 - **Product Hunt** — launch page with video, screenshots, a "maker" comment thread, respond to every comment same-day. Good for press + first 500 downloads.
-- **Hacker News (Show HN)** — one honest post, title that states the problem ("Show HN: ScrollStop – an Android app that gently stops your doomscrolling"), answer every comment. Requires your repo/landing page to be tidy (hence A4/D2).
+- **Hacker News (Show HN)** — one honest post, title that states the problem ("Show HN: ScrollBeat – an Android app that gently stops your doomscrolling"), answer every comment. Requires your repo/landing page to be tidy (hence A4/D2).
 - **Reddit** — r/Android, r/digitalminimalism, r/nosurf, r/nosurf, r/productivity, r/apps, r/selfimprovement, r/ADHD. **Never post the same thread twice**; tailor each; be transparent ("I built this, it's on-device, has a free tier, 7-day trial"). r/nosurf and r/digitalminimalism are your best audiences — this is a product they actively seek.
 - **Indie Hackers** — build-in-public log: weekly posts of screenshots + numbers. Builds a small engaged following.
 
 **E2. Short-form video (organic).** This app is *made* for the "I fixed my screen time" genre:
-- TikTok / YouTube Shorts / Instagram Reels: 3–5 clips a week mixing (a) your own screen-time story, (b) before/after, (c) the "200 scrolls" reminder popup reaction, (d) "3 apps that help you stop scrolling" listicles including ScrollStop.
+- TikTok / YouTube Shorts / Instagram Reels: 3–5 clips a week mixing (a) your own screen-time story, (b) before/after, (c) the "200 scrolls" reminder popup reaction, (d) "3 apps that help you stop scrolling" listicles including ScrollBeat.
 - Post the promo video (D4) week one and iterate on what lands. This is the single biggest organic distribution channel for habit apps right now.
 
 **E3. Review sites & newsletters (one email each, free).**
@@ -160,7 +160,7 @@ Ranked by expected ROI for a solo, bootstrapped indie app. Do 1–3 first; 4–6
 **E5. Partnerships.** One-way digital wellbeing roundups, minimalism podcasts (guest slot), and digital-detox apps that complement rather than compete (e.g., app-blockers) — cross-promo or bundling ideas.
 
 **E6. ASO (App Store Optimization) — ongoing.**
-- Title/subtitle: keep `ScrollStop`, but the short description is keyword-rich. Target keywords: doomscroll(ing), screen time, digital wellbeing, focus, habit, mindful, break, phone addiction.
+- Title/subtitle: keep `ScrollBeat`, but the short description is keyword-rich. Target keywords: doomscroll(ing), screen time, digital wellbeing, focus, habit, mindful, break, phone addiction.
 - Localize the listing into 2–3 languages that match your real audience (Play's free auto-translate is a start; manual for top markets).
 - A/B test the feature graphic and first screenshot via Play's experiments after a couple hundred installs.
 

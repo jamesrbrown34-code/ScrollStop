@@ -1,6 +1,6 @@
-# ScrollStop
+# ScrollBeat
 
-ScrollStop is an Android accessibility service that detects doomscrolling and nudges the user to stop. A **Premium** tier unlocks custom reminder controls, per-app controls, themes, streak features, and daily summaries; free users get a fixed reminder cadence with respectful limits.
+ScrollBeat is an Android accessibility service that detects doomscrolling and nudges the user to stop. A **Premium** tier unlocks custom reminder controls, per-app controls, themes, streak features, and daily summaries; free users get a fixed reminder cadence with respectful limits.
 
 ## Language
 
@@ -33,7 +33,7 @@ A **Premium** styling option that changes the app's colour accent (Monochrome, F
 _Avoid_: Colour scheme, skin, appearance pack
 
 **Tracked apps**:
-The set of apps ScrollStop monitors, chosen by the user from a curated library of known scrolling apps.
+The set of apps ScrollBeat monitors, chosen by the user from a curated library of known scrolling apps.
 _Avoid_: Target apps, watched apps, filter list
 
 **Quiet hours**:
@@ -61,7 +61,7 @@ How a scroll reminder is delivered on screen — Heads-up (expandable banner) or
 _Avoid_: Notification size, popup style
 
 **Reminder cooldown**:
-The minimum time ScrollStop waits between reminders, configurable in minutes. A Free setting, global.
+The minimum time ScrollBeat waits between reminders, configurable in minutes. A Free setting, global.
 _Avoid_: Reminder gap, throttle, quiet interval
 
 **Daily summary notification**:

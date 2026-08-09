@@ -1,8 +1,8 @@
-# Wayfinder map — Launch ScrollStop on Google Play
+# Wayfinder map — Launch ScrollBeat on Google Play
 
 ## Destination
 
-ScrollStop published to Google Play production: a signed release build in the Production track, with store listing, hosted privacy policy, data-safety form, content rating, accessibility declaration, and both subscriptions configured — passing Play review. "Done" = a new user can install the app from the public store listing.
+ScrollBeat published to Google Play production: a signed release build in the Production track, with store listing, hosted privacy policy, data-safety form, content rating, accessibility declaration, and both subscriptions configured — passing Play review. "Done" = a new user can install the app from the public store listing.
 
 ## Notes
 

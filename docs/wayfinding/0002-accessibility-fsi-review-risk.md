@@ -7,7 +7,7 @@ blocked-by: []
 
 ## Question
 
-What does Google Play currently require of apps that declare an accessibility service and the `USE_FULL_SCREEN_INTENT` permission, and how real is the rejection risk for ScrollStop?
+What does Google Play currently require of apps that declare an accessibility service and the `USE_FULL_SCREEN_INTENT` permission, and how real is the rejection risk for ScrollBeat?
 
 Research (AFK, via a research subagent):
 - Play's accessibility-service policy: what the declaration must say, any in-app "prominent disclosure" requirements, and how reviewers treat scroll-counting utilities.

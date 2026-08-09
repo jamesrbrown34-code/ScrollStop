@@ -24,7 +24,7 @@ import com.scrollstop.app.ui.MainActivity
 
 object InterventionManager {
     private const val CHANNEL_ID = "doomscroll_alerts"
-    private const val CHANNEL_NAME = "ScrollStop Reminders"
+    private const val CHANNEL_NAME = "ScrollBeat Reminders"
     private const val NOTIFICATION_ID = 10101
 
     fun trigger(

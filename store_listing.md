@@ -1,20 +1,20 @@
-# ScrollStop — Store Listing
+# ScrollBeat — Store Listing
 
 ## Title (max 30 chars)
 
 ```
-ScrollStop
+ScrollBeat
 ```
 
 Optional descriptive alternative (also under 30):
 ```
-ScrollStop – Stop Doomscrolling
+ScrollBeat – Stop Doomscrolling
 ```
 
 ## Short description (max 80 chars)
 
 ```
-ScrollStop helps you notice doomscrolling and gently stop.
+ScrollBeat helps you notice doomscrolling and gently stop.
 ```
 
 Backup, more action-oriented:
@@ -25,13 +25,13 @@ Stop doomscrolling. Gentle reminders help you put the phone down.
 ## Full description
 
 ```
-ScrollStop helps you notice when you've been scrolling too long — and gently reminds you to stop.
+ScrollBeat helps you notice when you've been scrolling too long — and gently reminds you to stop.
 
-ScrollStop counts your scrolling in the background across the apps you choose to track, then sends a calm reminder when you've had enough. No judgement, no lockouts. Just a nudge to take back your day.
+ScrollBeat counts your scrolling in the background across the apps you choose to track, then sends a calm reminder when you've had enough. No judgement, no lockouts. Just a nudge to take back your day.
 
 HOW IT WORKS
 • Pick the apps you scroll most from a curated library of popular scrolling apps.
-• ScrollStop counts scrolls in the background — it never reads your screen, and everything stays on your device.
+• ScrollBeat counts scrolls in the background — it never reads your screen, and everything stays on your device.
 • When you hit your reminder limit, you get a gentle reminder.
 • See your day at a glance: today's scrolls, your today's goal, your weekly pattern, your top apps, and a monthly breakdown.
 
@@ -43,7 +43,7 @@ BUILT TO RESPECT YOU
 • Reminder cooldown — choose how often reminders can arrive.
 • Reduction plans — pick Easy, Medium, Hard or Extreme and cut your scrolling week by week.
 
-SCROLLSTOP PREMIUM
+SCROLLBEAT PREMIUM
 Premium makes reminders truly yours:
 • Custom reminder limits and reminder tones
 • Per-app reminder limits and per-app reminder tones
@@ -54,10 +54,10 @@ Premium makes reminders truly yours:
 Premium is a monthly or yearly subscription with a free trial. Cancel anytime. Prices and trials are set per market.
 
 PRIVACY
-ScrollStop processes everything on your device. No account, no sign-up, and no data leaves your phone.
+ScrollBeat processes everything on your device. No account, no sign-up, and no data leaves your phone.
 
 ACCESSIBILITY
-ScrollStop uses an Android accessibility service solely to count scroll events in the apps you choose to track — it never reads your screen, text, or input, and it only monitors the apps you've selected. You enable it explicitly and can remove it any time.
+ScrollBeat uses an Android accessibility service solely to count scroll events in the apps you choose to track — it never reads your screen, text, or input, and it only monitors the apps you've selected. You enable it explicitly and can remove it any time.
 ```
 
 ## Related assets still needed

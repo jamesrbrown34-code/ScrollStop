@@ -8,7 +8,7 @@
 
 ---
 
-## 1. How ScrollStop counts scrolling today
+## 1. How ScrollBeat counts scrolling today
 
 The full detection chain:
 
@@ -40,7 +40,7 @@ A "bad = no interaction" classifier needs:
 
 ### The privacy/disclosure cost
 
-ScrollStop's position is local-only, on-device, minimal footprint. The wayfinding map treats the accessibility disclosure as a first-class submission blocker (`docs/wayfinding/0011-accessibility-disclosure.md`). Adding click events changes what the service "accesses" — the disclosure copy, the Play store description, and the data-safety answers would all have to be updated to say the service observes taps, not just scrolls. That is a real, visible cost, not an implementation detail.
+ScrollBeat's position is local-only, on-device, minimal footprint. The wayfinding map treats the accessibility disclosure as a first-class submission blocker (`docs/wayfinding/0011-accessibility-disclosure.md`). Adding click events changes what the service "accesses" — the disclosure copy, the Play store description, and the data-safety answers would all have to be updated to say the service observes taps, not just scrolls. That is a real, visible cost, not an implementation detail.
 
 ---
 

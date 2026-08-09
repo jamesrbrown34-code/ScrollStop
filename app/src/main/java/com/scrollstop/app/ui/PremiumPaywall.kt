@@ -87,7 +87,7 @@ internal fun PremiumPaywallPage(
             }
 
             Spacer(Modifier.height(20.dp))
-            Text("ScrollStop Premium", color = TextPrimary, fontSize = 26.sp, fontWeight = FontWeight.Black)
+            Text("ScrollBeat Premium", color = TextPrimary, fontSize = 26.sp, fontWeight = FontWeight.Black)
             Text(
                 "Doomscrolling habits, met with calm control.",
                 color = TextSecondary,
