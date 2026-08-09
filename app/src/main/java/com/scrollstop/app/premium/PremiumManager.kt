@@ -35,7 +35,7 @@ class PremiumManager(context: Context) {
         settings.settings,
         _debugPremiumEnabled
     ) { billingState, reminder, debugEnabled ->
-        val isPremium = if (BuildConfig.DEBUG) debugEnabled else billingState.isPremium
+        val isPremium = if (BuildConfig.DEBUG) debugEnabled || billingState.isPremium else billingState.isPremium
         PremiumUiState(
             isPremium,
             if (isPremium) reminder else ReminderSettings(),
