@@ -127,7 +127,7 @@ internal fun TodayTab(
 private fun PremiumBanner(onOpenPremium: () -> Unit) {
     Card(colors = CardDefaults.cardColors(containerColor = PanelColor), shape = RoundedCornerShape(20.dp)) {
         Column(modifier = Modifier.padding(20.dp)) {
-            Text("ScrollStop Premium", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text("ScrollBeat Premium", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Text(
                 "Custom limits, tones, per-app controls, themes and more.",
                 color = TextSecondary,
@@ -168,9 +168,9 @@ private fun TrackingPausedCard(
             )
             Text(
                 text = if (status == ScrollStopStatus.PERMISSION_REQUIRED) {
-                    "Allow notifications so ScrollStop can deliver its reminders."
+                    "Allow notifications so ScrollBeat can deliver its reminders."
                 } else {
-                    "Turn on ScrollStop to start tracking your scrolling habits. Tracking will not work until the service is enabled."
+                    "Turn on ScrollBeat to start tracking your scrolling habits. Tracking will not work until the service is enabled."
                 },
                 color = TextPrimary.copy(alpha = 0.82f),
                 fontSize = 14.sp,
@@ -555,7 +555,7 @@ private fun ReductionPlanCard() {
                 val baseline = buildWeeklyBaseline(events, today)
                 if (baseline == null) {
                     Text(
-                        "Not enough data yet to build a baseline. Keep using ScrollStop for a few more days.",
+                        "Not enough data yet to build a baseline. Keep using ScrollBeat for a few more days.",
                         color = TextSecondary,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(top = 6.dp)

@@ -9,7 +9,7 @@ import com.scrollstop.app.service.ScrollMonitorService
 
 object EnableAccessibility {
     /**
-     * Opens ScrollStop's own accessibility toggle (one flip) on Android 10+, falling back to
+     * Opens ScrollBeat's own accessibility toggle (one flip) on Android 10+, falling back to
      * the full accessibility list where the deep link isn't available or the OEM breaks it.
      */
     fun openServiceSettings(context: Context) {

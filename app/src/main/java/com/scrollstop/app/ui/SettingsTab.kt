@@ -193,7 +193,7 @@ private fun StatusCard(
         Column(modifier = Modifier.padding(20.dp)) {
             Text("Status", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Text(
-                "ScrollStop needs two things to work.",
+                "ScrollBeat needs two things to work.",
                 color = TextSecondary,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(top = 4.dp)
@@ -301,7 +301,7 @@ private fun ReminderLimitCard(premium: PremiumUiState, onOpenPremium: () -> Unit
                 )
             } else {
                 Text("$FREE_REMINDER_LIMIT scrolls", color = TextPrimary, fontSize = 28.sp, fontWeight = FontWeight.Black)
-                Text("🔒 Custom reminder limits are available with ScrollStop Premium.", color = TextSecondary, fontSize = 12.sp)
+                Text("🔒 Custom reminder limits are available with ScrollBeat Premium.", color = TextSecondary, fontSize = 12.sp)
                 Button(
                     onClick = onOpenPremium,
                     colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Background),
@@ -394,7 +394,7 @@ private fun ReminderCooldownCard(cooldownMinutes: Int, onSetCooldown: (Int) -> U
                 modifier = Modifier.padding(top = 4.dp)
             )
             Text(
-                "How long ScrollStop waits between reminders.",
+                "How long ScrollBeat waits between reminders.",
                 color = TextSecondary,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(top = 4.dp)
@@ -566,7 +566,7 @@ private fun TrackedAppsCard(selected: Set<String>, pausedUntil: Long, onEditApps
     Card(colors = CardDefaults.cardColors(containerColor = PanelColor), shape = RoundedCornerShape(20.dp)) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text("Tracked Apps", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-            Text("ScrollStop watches these apps.", color = TextSecondary, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
+            Text("ScrollBeat watches these apps.", color = TextSecondary, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
             if (paused) {
                 Text(
                     "⏸ Tracking paused until ${formatTime(pausedUntil)}",

@@ -17,7 +17,7 @@ const val DEFAULT_REMINDER_COOLDOWN_MINUTES = 10
 
 private val Context.reminderCooldownDataStore by preferencesDataStore("reminder_cooldown")
 
-/** How long ScrollStop waits between reminders, in minutes. Free setting, global. */
+/** How long ScrollBeat waits between reminders, in minutes. Free setting, global. */
 class ReminderCooldownRepository(context: Context) {
     private val appContext = context.applicationContext
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
