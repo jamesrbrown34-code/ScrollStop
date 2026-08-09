@@ -204,7 +204,7 @@ private fun MainScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 8.dp)) {
                 Text("SCROLLBEAT", color = TextPrimary, fontSize = 30.sp, fontWeight = FontWeight.Black)
-                Text("A calmer view of your scrolling", color = TextSecondary, fontSize = 14.sp)
+                Text("Beat the doomscroll", color = TextSecondary, fontSize = 14.sp)
             }
 
             Box(modifier = Modifier.weight(1f)) {

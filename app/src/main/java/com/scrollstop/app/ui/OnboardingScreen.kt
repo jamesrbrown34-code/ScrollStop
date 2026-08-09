@@ -149,7 +149,7 @@ private fun WelcomeStep() {
     Column {
         Text("ScrollBeat", color = TextPrimary, fontSize = 34.sp, fontWeight = FontWeight.Black)
         Text(
-            "A calmer view of your scrolling.",
+            "Beat the doomscroll.",
             color = TextSecondary,
             fontSize = 15.sp,
             modifier = Modifier.padding(top = 8.dp)
