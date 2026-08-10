@@ -1,4 +1,4 @@
-package com.example.doomscrolldetector.core
+package com.scrollstop.app.core
 
 enum class AwarenessLevel {
     NORMAL,
@@ -25,6 +25,14 @@ object DoomscrollAwareness {
         val timeState = evaluateTime(sessionDurationMs)
         val scrollState = evaluateScrollCount(scrollCount)
         return if (timeState.level.ordinal >= scrollState.level.ordinal) timeState else scrollState
+    }
+
+    /** Escalation tier for a cumulative daily scroll count, e.g. for reminder copy. */
+    fun dailyLevel(dailyScrollCount: Int): AwarenessLevel = when {
+        dailyScrollCount >= SCROLL_CRITICAL_THRESHOLD -> AwarenessLevel.CRITICAL
+        dailyScrollCount >= SCROLL_WARNING_THRESHOLD -> AwarenessLevel.WARNING
+        dailyScrollCount >= SCROLL_NOTICE_THRESHOLD -> AwarenessLevel.NOTICE
+        else -> AwarenessLevel.NORMAL
     }
 
     private fun evaluateTime(sessionDurationMs: Long): AwarenessState {

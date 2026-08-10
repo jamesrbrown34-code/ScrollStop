@@ -1,9 +1,9 @@
-package com.example.doomscrolldetector.service
+package com.scrollstop.app.service
 
 import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
-import com.example.doomscrolldetector.core.ScrollTracker
-import com.example.doomscrolldetector.util.AppFilter
+import com.scrollstop.app.core.ScrollTracker
+import com.scrollstop.app.data.TrackedAppsGraph
 
 class ScrollMonitorService : AccessibilityService() {
 
@@ -11,7 +11,7 @@ class ScrollMonitorService : AccessibilityService() {
         if (event == null) return
 
         val packageName = event.packageName?.toString() ?: return
-        if (!AppFilter.shouldTrack(packageName)) return
+        if (!TrackedAppsGraph.repository(this).isTracked(packageName)) return
 
         when (event.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {

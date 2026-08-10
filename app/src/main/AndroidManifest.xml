@@ -3,6 +3,15 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -33,6 +42,41 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
+        <receiver
+            android:name=".core.PauseReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.scrollstop.app.PAUSE_TRACKING" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".core.SummaryReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.scrollstop.app.DAILY_SUMMARY" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".core.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".ui.ScrollStopWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/scrollstop_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

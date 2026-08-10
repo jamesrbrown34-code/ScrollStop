@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+**/.gradle/
+.gradle-user-home/
+build/
+**/build/
+
+# Android Studio
+.idea/
+*.iml
+.kotlin/
+captures/
+.cxx/
+
+# Local files
+local.properties
+
+# Generated files
+*.apk
+*.aab
+
+# Signing
+keystore.properties
+*.jks
+*.keystore
