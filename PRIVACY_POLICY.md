@@ -1,6 +1,6 @@
 # ScrollBeat Privacy Policy
 
-Last updated: 8 August 2026
+Last updated: 9 August 2026
 
 ScrollBeat ("we", "our", "the app") is an Android app that helps you notice and reduce mindless scrolling.
 
